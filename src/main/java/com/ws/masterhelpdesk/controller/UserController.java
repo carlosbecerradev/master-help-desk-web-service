@@ -2,6 +2,9 @@ package com.ws.masterhelpdesk.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Positive;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,18 +38,18 @@ public class UserController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<UserDto> getUserById(@PathVariable(value = "id", required = true) Long id) {
+	public ResponseEntity<UserDto> getUserById(@PathVariable(value = "id", required = true) @Positive Long id) {
 		return new ResponseEntity<UserDto>(iUserService.getUserDtoById(id), HttpStatus.OK);
 	}
 
 	@PostMapping
-	public ResponseEntity<HttpStatus> insertUser(@RequestBody UserDto userDto) {
+	public ResponseEntity<HttpStatus> insertUser(@RequestBody @Valid UserDto userDto) {
 		iUserService.insertUser(userDto);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 	@PutMapping
-	public ResponseEntity<HttpStatus> updateUser(@RequestBody UserDto userDto) {
+	public ResponseEntity<HttpStatus> updateUser(@RequestBody @Valid UserDto userDto) {
 		iUserService.updateUser(userDto);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
