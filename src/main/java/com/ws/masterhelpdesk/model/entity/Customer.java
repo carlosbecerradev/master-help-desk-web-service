@@ -5,6 +5,8 @@ import java.time.Instant;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,6 +27,7 @@ public class Customer implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "customer_id")
 	private Long customerId;
 
 	@Column(length = 50, nullable = false)
@@ -35,6 +38,13 @@ public class Customer implements Serializable {
 
 	@Column(length = 100, nullable = false, unique = true)
 	private String email;
+
+	@Column(length = 15, nullable = false, unique = true)
+	private String cellphone;
+
+	@Enumerated(EnumType.STRING)
+	@Column(length = 20, nullable = false)
+	private Gender gender;
 
 	@Column(nullable = false)
 	private Boolean enabled;

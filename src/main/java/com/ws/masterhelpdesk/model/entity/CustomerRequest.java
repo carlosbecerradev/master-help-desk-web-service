@@ -26,6 +26,7 @@ public class CustomerRequest implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "customer_request_id")
 	private Long customerRequestId;
 
 	@Column(length = 255, nullable = false)

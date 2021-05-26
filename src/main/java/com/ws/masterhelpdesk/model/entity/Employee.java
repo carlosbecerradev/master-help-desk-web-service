@@ -27,6 +27,7 @@ public class Employee implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "employee_id")
 	private Long employeeId;
 
 	@Column(length = 50, nullable = false)
@@ -35,9 +36,8 @@ public class Employee implements Serializable {
 	@Column(length = 50, nullable = false)
 	private String surname;
 
-	@Enumerated(EnumType.STRING)
-	@Column(length = 20, nullable = false)
-	private EmployeeStatus status;
+	@Column(nullable = false)
+	private Boolean enabled;
 
 	@Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP")
 	private Instant createdAt;

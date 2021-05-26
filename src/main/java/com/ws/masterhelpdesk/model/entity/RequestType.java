@@ -23,6 +23,7 @@ public class RequestType implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "request_type_id")
 	private Long requestTypeId;
 
 	@Column(length = 255, nullable = false, unique = true)

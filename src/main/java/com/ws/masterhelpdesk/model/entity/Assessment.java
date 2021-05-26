@@ -27,16 +27,17 @@ public class Assessment implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "assessment_id")
 	private Long assessmentId;
 
 	@Enumerated(EnumType.STRING)
-	@Column(length = 20, nullable = false)
+	@Column(length = 20, nullable = true)
 	private AssessmentType assessment_type;
 
 	@Column(length = 255, nullable = false, unique = true)
 	private String token;
 
-	@Column(length = 255, nullable = false)
+	@Column(length = 255, nullable = true)
 	private String observation;
 
 	@Column(nullable = false)

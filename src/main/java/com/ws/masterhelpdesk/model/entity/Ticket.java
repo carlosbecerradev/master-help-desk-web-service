@@ -28,10 +28,15 @@ public class Ticket implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ticket_id")
 	private Long ticketId;
 
 	@Column(name = "estimated_time", nullable = true, updatable = false, columnDefinition = "TIMESTAMP")
 	private Instant estimatedTime;
+
+	@Enumerated(EnumType.STRING)
+	@Column(length = 10, nullable = false)
+	private TicketPriority ticketPriority;
 
 	@Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP")
 	private Instant createdAt;
