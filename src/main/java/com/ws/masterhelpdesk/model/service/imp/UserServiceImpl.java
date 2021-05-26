@@ -77,4 +77,10 @@ public class UserServiceImpl implements IUserService {
 		System.out.println("update: " + user.toString());
 	}
 
+	@Override
+	@Transactional(readOnly = false)
+	public void deleteUser(Long id) {
+		iUserRepository.deleteById(id);
+	}
+
 }

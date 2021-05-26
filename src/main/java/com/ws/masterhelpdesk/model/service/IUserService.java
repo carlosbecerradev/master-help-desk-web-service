@@ -21,4 +21,6 @@ public interface IUserService {
 	public void insertUser(UserDto userDto);
 
 	public void updateUser(UserDto userDto);
+	
+	public void deleteUser(Long id);
 }

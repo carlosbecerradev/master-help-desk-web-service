@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -60,6 +61,12 @@ public class UserController {
 	@PutMapping
 	public ResponseEntity<HttpStatus> updateUser(@RequestBody @Valid UserDto userDto) {
 		iUserService.updateUser(userDto);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<HttpStatus> deleteUser(@PathVariable(value = "id", required = true) @Positive Long id) {
+		iUserService.deleteUser(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
