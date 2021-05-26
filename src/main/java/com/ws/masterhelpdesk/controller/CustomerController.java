@@ -32,7 +32,7 @@ public class CustomerController {
 	
 
 	@GetMapping
-	public ResponseEntity<List<CustomerDto>> getAllUserDto() {
+	public ResponseEntity<List<CustomerDto>> getAllCustomerDto() {
 		return new ResponseEntity<List<CustomerDto>>(iCustomerService.getAllCustomersDto(), HttpStatus.OK);
 	}
 
@@ -42,7 +42,7 @@ public class CustomerController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<CustomerDto> geCustomerrById(@PathVariable(value = "id", required = true) @Positive Long id) {
+	public ResponseEntity<CustomerDto> getCustomerById(@PathVariable(value = "id", required = true) @Positive Long id) {
 		return new ResponseEntity<CustomerDto>(iCustomerService.getCustomerDtoById(id), HttpStatus.OK);
 	}
 
@@ -53,13 +53,13 @@ public class CustomerController {
 	}
 
 	@PutMapping
-	public ResponseEntity<HttpStatus> updateUser(@RequestBody @Valid CustomerDto customerDto) {
+	public ResponseEntity<HttpStatus> updateCustomer(@RequestBody @Valid CustomerDto customerDto) {
 		iCustomerService.updateCustomer(customerDto);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<HttpStatus> deleteUser(@PathVariable(value = "id", required = true) @Positive Long id) {
+	public ResponseEntity<HttpStatus> deleteCustomer(@PathVariable(value = "id", required = true) @Positive Long id) {
 		iCustomerService.deleteCustomer(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
