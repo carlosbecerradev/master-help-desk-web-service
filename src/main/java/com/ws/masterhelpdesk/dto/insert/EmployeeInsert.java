@@ -1,9 +1,6 @@
-package com.ws.masterhelpdesk.dto;
-
-import java.time.Instant;
+package com.ws.masterhelpdesk.dto.insert;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.Builder;
@@ -13,9 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class EmployeeDto {
-
-	private Long id;
+public class EmployeeInsert {
 
 	@NotBlank
 	@Size(min = 2, max = 50)
@@ -25,10 +20,15 @@ public class EmployeeDto {
 	@Size(min = 2, max = 50)
 	private String surname;
 
-	@NotNull
-	private Boolean enabled;
+	@NotBlank
+	@Size(min = 6, max = 20)
+	private String username;
 
-	private Instant createdAt;
+	@NotBlank
+	@Size(min = 6, max = 60)
+	private String password;
 
-	private Long userId;
+	@NotBlank
+	@Size(max = 20)
+	private String authority;
 }

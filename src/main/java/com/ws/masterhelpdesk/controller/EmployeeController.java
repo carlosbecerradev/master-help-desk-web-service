@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ws.masterhelpdesk.dto.EmployeeDto;
+import com.ws.masterhelpdesk.dto.insert.EmployeeInsert;
 import com.ws.masterhelpdesk.model.service.IEmployeeService;
 
 import lombok.AllArgsConstructor;
@@ -41,8 +42,8 @@ public class EmployeeController {
 	}
 
 	@PostMapping
-	public ResponseEntity<HttpStatus> insertEmployee(@RequestBody @Valid EmployeeDto employeeDto) {
-		iEmployeeService.insertEmployee(employeeDto);
+	public ResponseEntity<HttpStatus> insertEmployee(@RequestBody @Valid EmployeeInsert employeeInsert) {
+		iEmployeeService.insertEmployee(employeeInsert);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 

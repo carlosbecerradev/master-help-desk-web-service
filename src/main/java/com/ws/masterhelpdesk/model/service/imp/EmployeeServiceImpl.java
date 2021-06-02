@@ -8,8 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ws.masterhelpdesk.dto.EmployeeDto;
+import com.ws.masterhelpdesk.dto.insert.EmployeeInsert;
 import com.ws.masterhelpdesk.dto.mapper.EmployeeMapper;
+import com.ws.masterhelpdesk.model.entity.Authority;
 import com.ws.masterhelpdesk.model.entity.Employee;
+import com.ws.masterhelpdesk.model.entity.User;
 import com.ws.masterhelpdesk.model.repository.IEmployeeRepository;
 import com.ws.masterhelpdesk.model.service.IEmployeeService;
 
@@ -43,10 +46,19 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public void insertEmployee(EmployeeDto employeeDto) {
+	public void insertEmployee(EmployeeInsert employeeInsert) {
 		Employee newEmployee = new Employee();
-		newEmployee = employeeMapper.mapDtoToEntity(employeeDto, newEmployee);
+		newEmployee.setName(employeeInsert.getName());
+		newEmployee.setSurname(employeeInsert.getSurname());
+		newEmployee.setEnabled(true);
 		newEmployee.setCreatedAt(Instant.now());
+		User user = new User();
+		user.setUsername(employeeInsert.getUsername());
+		user.setPassword(employeeInsert.getPassword());
+		user.setAuthority(Authority.valueOf(employeeInsert.getAuthority().toUpperCase()));
+		user.setEnabled(true);
+		user.setCreatedAt(Instant.now());
+		newEmployee.setUser(user);
 		iEmployeeRepository.save(newEmployee);
 		System.out.println("insert: " + newEmployee.toString());
 	}
