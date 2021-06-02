@@ -19,7 +19,7 @@ public class CustomerMapper {
 		return CustomerDto.builder().id(customer.getCustomerId()).name(customer.getName())
 				.surname(customer.getSurname()).email(customer.getEmail()).cellphone(customer.getCellphone())
 				.gender(customer.getGender().toString()).enabled(customer.getEnabled())
-				.userId(customer.getUser().getUserId()).build();
+				.createdAt(customer.getCreatedAt()).userId(customer.getUser().getUserId()).build();
 	}
 
 	public Customer mapDtoToEntity(CustomerDto customerDto, Customer customer) {

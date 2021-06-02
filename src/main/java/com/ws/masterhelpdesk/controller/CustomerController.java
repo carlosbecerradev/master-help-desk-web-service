@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ws.masterhelpdesk.dto.CustomerDto;
+import com.ws.masterhelpdesk.dto.insert.CustomerInsert;
 import com.ws.masterhelpdesk.model.service.ICustomerService;
 
 import lombok.AllArgsConstructor;
@@ -27,9 +28,8 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/api/customers")
 @AllArgsConstructor
 public class CustomerController {
-	
+
 	private final ICustomerService iCustomerService;
-	
 
 	@GetMapping
 	public ResponseEntity<List<CustomerDto>> getAllCustomerDto() {
@@ -47,8 +47,8 @@ public class CustomerController {
 	}
 
 	@PostMapping
-	public ResponseEntity<HttpStatus> insertCustomer(@RequestBody @Valid CustomerDto customerDto) {
-		iCustomerService.insertCustomer(customerDto);
+	public ResponseEntity<HttpStatus> insertCustomer(@RequestBody @Valid CustomerInsert customerInsert) {
+		iCustomerService.insertCustomer(customerInsert);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 

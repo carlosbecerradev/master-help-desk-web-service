@@ -9,9 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ws.masterhelpdesk.dto.CustomerDto;
+import com.ws.masterhelpdesk.dto.insert.CustomerInsert;
 import com.ws.masterhelpdesk.dto.mapper.CustomerMapper;
+import com.ws.masterhelpdesk.model.entity.Authority;
 import com.ws.masterhelpdesk.model.entity.Customer;
 import com.ws.masterhelpdesk.model.entity.Gender;
+import com.ws.masterhelpdesk.model.entity.User;
 import com.ws.masterhelpdesk.model.repository.ICustomerRepository;
 import com.ws.masterhelpdesk.model.service.ICustomerService;
 
@@ -59,10 +62,19 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public void insertCustomer(CustomerDto customerDto) {
+	public void insertCustomer(CustomerInsert customerDto) {
 		Customer newCustomer = new Customer();
-		newCustomer = customerMapper.mapDtoToEntity(customerDto, newCustomer);
+		newCustomer.setName(customerDto.getName());
+		newCustomer.setSurname(customerDto.getSurname());
+		newCustomer.setEmail(customerDto.getEmail());
+		newCustomer.setCellphone(customerDto.getCellphone());
+		newCustomer.setGender(Gender.valueOf(customerDto.getGender()));
+		newCustomer.setEnabled(true);
 		newCustomer.setCreatedAt(Instant.now());
+
+		User newUser = new User(null, customerDto.getUsername(), customerDto.getPassword(), Authority.CLIENTE, true,
+				Instant.now());
+		newCustomer.setUser(newUser);
 		iCustomerRepository.save(newCustomer);
 		System.out.println("insert: " + newCustomer.toString());
 	}

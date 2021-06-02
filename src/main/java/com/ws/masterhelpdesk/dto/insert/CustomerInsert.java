@@ -1,6 +1,4 @@
-package com.ws.masterhelpdesk.dto;
-
-import java.time.Instant;
+package com.ws.masterhelpdesk.dto.insert;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -9,12 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class CustomerDto {
+public class CustomerInsert {
 
-	private Long id;
-	
 	private String name;
-	
+
 	private String surname;
 
 	private String email;
@@ -25,7 +21,7 @@ public class CustomerDto {
 
 	private Boolean enabled;
 
-	private Instant createdAt;
+	private String username;
 
-	private Long userId;
+	private String password;
 }
