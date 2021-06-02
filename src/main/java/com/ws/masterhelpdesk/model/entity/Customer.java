@@ -3,6 +3,7 @@ package com.ws.masterhelpdesk.model.entity;
 import java.io.Serializable;
 import java.time.Instant;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -52,7 +53,7 @@ public class Customer implements Serializable {
 	@Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP")
 	private Instant createdAt;
 
-	@OneToOne
-	@JoinColumn(name = "user_id", nullable = false)
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	@JoinColumn(name = "user_id", nullable = false, unique = true)
 	private User user;
 }

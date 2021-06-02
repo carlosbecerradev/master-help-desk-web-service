@@ -11,7 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -46,7 +46,7 @@ public class Assessment implements Serializable {
 	@Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP")
 	private Instant createdAt;
 
-	@ManyToOne
-	@JoinColumn(name = "ticket_id", nullable = false)
+	@OneToOne
+	@JoinColumn(name = "ticket_id", nullable = false, unique = true)
 	private Ticket ticket;
 }

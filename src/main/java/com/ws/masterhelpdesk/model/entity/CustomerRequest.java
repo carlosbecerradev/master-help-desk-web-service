@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -38,7 +37,7 @@ public class CustomerRequest implements Serializable {
 	@Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP")
 	private Instant createdAt;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "request_type_id", nullable = false)
 	private RequestType requestType;
 

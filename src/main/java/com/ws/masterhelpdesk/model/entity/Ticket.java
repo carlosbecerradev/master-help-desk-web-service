@@ -53,6 +53,6 @@ public class Ticket implements Serializable {
 	private Employee employee;
 
 	@OneToOne
-	@JoinColumn(name = "customer_request_id", nullable = false)
+	@JoinColumn(name = "customer_request_id", nullable = false, unique = true)
 	private CustomerRequest customerRequest;
 }
