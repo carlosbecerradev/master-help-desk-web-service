@@ -10,7 +10,7 @@ import com.ws.masterhelpdesk.model.entity.RequestType;
 
 @Repository
 public interface IRequestTypeRepository extends JpaRepository<RequestType, Long> {
-	
-	@Query("select rt.name from RequestType rt")
-	List<String> findAllNames();
+
+	@Query("select rt.name from RequestType rt where rt.enabled = true")
+	List<String> findEnabledNames();
 }

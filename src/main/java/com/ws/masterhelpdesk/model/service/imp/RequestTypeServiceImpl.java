@@ -16,8 +16,8 @@ public class RequestTypeServiceImpl implements IRequestTypeService {
 	private final IRequestTypeRepository iRequestTypeRepository;
 
 	@Override
-	public List<String> getAllNames() throws Exception {
-		return iRequestTypeRepository.findAllNames();
+	public List<String> getEnabledNames() throws Exception {
+		return iRequestTypeRepository.findEnabledNames();
 	}
 
 }

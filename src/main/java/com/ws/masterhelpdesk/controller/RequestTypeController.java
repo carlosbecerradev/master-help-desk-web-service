@@ -22,9 +22,9 @@ public class RequestTypeController {
 	private final IRequestTypeService iRequestTypeService;
 
 	@GetMapping("/names")
-	public ResponseEntity<List<String>> getAllRequestTypeNames() {
+	public ResponseEntity<List<String>> getEnabledRequestTypeNames() {
 		try {
-			List<String> list = iRequestTypeService.getAllNames();
+			List<String> list = iRequestTypeService.getEnabledNames();
 			return new ResponseEntity<>(list, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
