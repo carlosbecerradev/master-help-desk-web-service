@@ -94,4 +94,10 @@ public class CustomerServiceImpl implements ICustomerService {
 		iCustomerRepository.deleteById(id);
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public Customer findCustomerByUser(User user) {
+		return iCustomerRepository.findByUser(user).orElseThrow(() -> new RuntimeException("Customer is not found."));
+	}
+
 }

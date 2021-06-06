@@ -7,6 +7,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.ws.masterhelpdesk.dto.LoginRequest;
+import com.ws.masterhelpdesk.model.entity.User;
+import com.ws.masterhelpdesk.model.repository.IUserRepository;
 
 import lombok.AllArgsConstructor;
 
@@ -16,6 +18,7 @@ public class AuthenticationService {
 
 	private final AuthenticationManager authenticationManager;
 	private final JwtService jwtService;
+	private final IUserRepository iUserRepository;
 
 	public String validateAuthentication(LoginRequest loginRequest) {
 		try {
@@ -28,5 +31,15 @@ public class AuthenticationService {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public Authentication getCurrentAuthentication() {
+		return SecurityContextHolder.getContext().getAuthentication();
+	}
+
+	public User getCurrentLoggedInUser() {
+		Authentication auth = getCurrentAuthentication();
+		return iUserRepository.findByUsername(auth.getName())
+				.orElseThrow(() -> new RuntimeException("User with username: " + auth.getName() + " is not found."));
 	}
 }
