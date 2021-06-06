@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/customer_request_type")
+@RequestMapping("/api/request-types")
 @AllArgsConstructor
 public class RequestTypeController {
 
