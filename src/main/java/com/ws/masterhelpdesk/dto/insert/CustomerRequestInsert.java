@@ -9,7 +9,7 @@ import lombok.Getter;
 public class CustomerRequestInsert {
 	@NotBlank
 	@Size(max = 255)
-	private String name;
+	private String requestTypeName;
 
 	@NotBlank
 	@Size(max = 255)

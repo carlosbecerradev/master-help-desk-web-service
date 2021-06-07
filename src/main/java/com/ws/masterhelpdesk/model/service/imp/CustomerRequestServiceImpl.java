@@ -28,7 +28,7 @@ public class CustomerRequestServiceImpl implements ICustomerRequestService {
 	@Transactional(readOnly = false)
 	public void insert(CustomerRequestInsert customerRequestInsert) throws Exception {
 		CustomerRequest cr = new CustomerRequest();
-		cr.setRequestType(iRequestTypeService.findRequestTypeByName(customerRequestInsert.getName()));
+		cr.setRequestType(iRequestTypeService.findRequestTypeByName(customerRequestInsert.getRequestTypeName()));
 		cr.setDescription(customerRequestInsert.getDescription());
 		cr.setEnabled(true);
 		cr.setCreatedAt(Instant.now());
