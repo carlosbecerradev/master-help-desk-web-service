@@ -48,4 +48,11 @@ public class CustomerRequestServiceImpl implements ICustomerRequestService {
 				.collect(Collectors.toList());
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public CustomerRequest findCustomerRequestById(Long id) {
+		return iCustomerRequestRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException("Customer Request with id: " + id + " is not found!"));
+	}
+
 }
