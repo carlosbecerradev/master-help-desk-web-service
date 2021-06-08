@@ -12,12 +12,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ws.masterhelpdesk.dto.CustomerRequestDto;
 import com.ws.masterhelpdesk.dto.insert.CustomerRequestInsert;
 import com.ws.masterhelpdesk.exception.ApiError;
 import com.ws.masterhelpdesk.model.service.ICustomerRequestService;
@@ -42,6 +44,12 @@ public class CustomerRequestController {
 			e.printStackTrace();
 			return new ResponseEntity<HttpStatus>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+
+	@GetMapping("/enabled/true")
+	public ResponseEntity<List<CustomerRequestDto>> getAllEnabledCustomerRequests() {
+		return new ResponseEntity<List<CustomerRequestDto>>(iCustomerRequestService.findAllEnabledCustomerRequest(),
+				HttpStatus.OK);
 	}
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
