@@ -1,5 +1,6 @@
 package com.ws.masterhelpdesk.controller;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ws.masterhelpdesk.dto.insert.TicketInsert;
 import com.ws.masterhelpdesk.exception.ApiError;
+import com.ws.masterhelpdesk.model.entity.TicketPriority;
 import com.ws.masterhelpdesk.model.service.ITicketService;
 
 import lombok.AllArgsConstructor;
@@ -36,6 +39,15 @@ public class TicketController {
 	public ResponseEntity<HttpStatus> insertTicket(@RequestBody @Valid TicketInsert ticketInsert) {
 		iTicketService.insert(ticketInsert);
 		return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
+	}
+
+	@GetMapping("/priorities")
+	public ResponseEntity<List<String>> getAllTicketPriotities() {
+		List<String> list = new ArrayList<String>();
+		for (TicketPriority ticketPriority : TicketPriority.values()) {
+			list.add(ticketPriority.toString());
+		}
+		return new ResponseEntity<List<String>>(list, HttpStatus.OK);
 	}
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
