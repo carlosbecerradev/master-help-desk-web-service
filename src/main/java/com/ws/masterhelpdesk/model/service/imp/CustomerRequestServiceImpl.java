@@ -55,4 +55,10 @@ public class CustomerRequestServiceImpl implements ICustomerRequestService {
 				.orElseThrow(() -> new RuntimeException("Customer Request with id: " + id + " is not found!"));
 	}
 
+	@Override
+	public void disabledCustomerRequest(CustomerRequest customerRequest) {
+		customerRequest.setEnabled(false);
+		iCustomerRequestRepository.save(customerRequest);
+	}
+
 }

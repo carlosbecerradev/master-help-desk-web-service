@@ -11,6 +11,8 @@ public interface ICustomerRequestService {
 	public void insert(CustomerRequestInsert customerRequestInsert) throws Exception;
 
 	public List<CustomerRequestDto> findAllEnabledCustomerRequest();
-	
+
 	public CustomerRequest findCustomerRequestById(Long id);
+
+	public void disabledCustomerRequest(CustomerRequest customerRequest);
 }

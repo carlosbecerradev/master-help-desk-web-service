@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ws.masterhelpdesk.dto.insert.TicketInsert;
+import com.ws.masterhelpdesk.model.entity.CustomerRequest;
 import com.ws.masterhelpdesk.model.entity.Ticket;
 import com.ws.masterhelpdesk.model.entity.TicketPriority;
 import com.ws.masterhelpdesk.model.entity.TicketStatus;
@@ -29,8 +30,9 @@ public class TicketServiceImpl implements ITicketService {
 	public void insert(TicketInsert ticketInsert) {
 		Ticket newTicket = new Ticket();
 
-		newTicket.setCustomerRequest(
-				iCustomerRequestService.findCustomerRequestById(ticketInsert.getCustomerRequestId()));
+		CustomerRequest cr = iCustomerRequestService.findCustomerRequestById(ticketInsert.getCustomerRequestId());
+		newTicket.setCustomerRequest(cr);
+		iCustomerRequestService.disabledCustomerRequest(cr);
 		newTicket.setEmployee(iEmployeeService.getEmployeeById(ticketInsert.getTecnicoEmployeeId()));
 		newTicket.setTicketPriority(TicketPriority.valueOf(ticketInsert.getTicketPriority()));
 		newTicket.setTicketStatus(TicketStatus.PENDIENTE);
