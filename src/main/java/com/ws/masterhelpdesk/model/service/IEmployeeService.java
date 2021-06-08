@@ -19,4 +19,6 @@ public interface IEmployeeService {
 	public void updateEmployee(EmployeeDto employeeDto);
 
 	public void deleteEmployee(Long id);
+
+	public List<EmployeeDto> findAllEnabledEmployeeDtoWithRolTECNICO();
 }

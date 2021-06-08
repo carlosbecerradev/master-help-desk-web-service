@@ -66,6 +66,12 @@ public class EmployeeController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
+	@GetMapping("/rol=TECNICO/enabled=true")
+	public ResponseEntity<List<EmployeeDto>> getAllEnabledEmployeeDtoWithRolTECNICO() {
+		return new ResponseEntity<List<EmployeeDto>>(iEmployeeService.findAllEnabledEmployeeDtoWithRolTECNICO(),
+				HttpStatus.OK);
+	}
+
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public List<ApiError> handleValidationExceptions(MethodArgumentNotValidException ex) {

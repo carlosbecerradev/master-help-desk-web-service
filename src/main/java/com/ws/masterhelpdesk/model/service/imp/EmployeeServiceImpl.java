@@ -78,4 +78,11 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		iEmployeeRepository.deleteById(id);
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public List<EmployeeDto> findAllEnabledEmployeeDtoWithRolTECNICO() {
+		return iEmployeeRepository.findByRolTECNICOAndEnabledTrue().stream().map(employeeMapper::mapEntityToDto)
+				.collect(Collectors.toList());
+	}
+
 }
