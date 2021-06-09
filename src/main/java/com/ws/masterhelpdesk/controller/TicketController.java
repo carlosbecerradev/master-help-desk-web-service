@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ws.masterhelpdesk.dto.TicketDto;
 import com.ws.masterhelpdesk.dto.insert.TicketInsert;
 import com.ws.masterhelpdesk.exception.ApiError;
 import com.ws.masterhelpdesk.model.entity.TicketPriority;
@@ -48,6 +49,11 @@ public class TicketController {
 			list.add(ticketPriority.toString());
 		}
 		return new ResponseEntity<List<String>>(list, HttpStatus.OK);
+	}
+
+	@GetMapping("/ticketStatus=PENDIENTE")
+	public ResponseEntity<List<TicketDto>> getAllPendienteTicketsByUserLoggedin() {
+		return new ResponseEntity<List<TicketDto>>(iTicketService.findAllPendienteTicketsByEmployee(), HttpStatus.OK);
 	}
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
