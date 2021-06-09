@@ -85,4 +85,10 @@ public class EmployeeServiceImpl implements IEmployeeService {
 				.collect(Collectors.toList());
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public Employee findEmployeeByUser(User user) {
+		return iEmployeeRepository.findByUser(user).orElseThrow(() -> new RuntimeException("Employee is not found!"));
+	}
+
 }

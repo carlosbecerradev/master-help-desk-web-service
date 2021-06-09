@@ -5,6 +5,7 @@ import java.util.List;
 import com.ws.masterhelpdesk.dto.EmployeeDto;
 import com.ws.masterhelpdesk.dto.insert.EmployeeInsert;
 import com.ws.masterhelpdesk.model.entity.Employee;
+import com.ws.masterhelpdesk.model.entity.User;
 
 public interface IEmployeeService {
 
@@ -21,4 +22,6 @@ public interface IEmployeeService {
 	public void deleteEmployee(Long id);
 
 	public List<EmployeeDto> findAllEnabledEmployeeDtoWithRolTECNICO();
+
+	public Employee findEmployeeByUser(User user);
 }
