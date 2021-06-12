@@ -59,4 +59,44 @@ public class TicketServiceImpl implements ITicketService {
 				.map(ticketMapper::mapEntityToDto).collect(Collectors.toList());
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public List<TicketDto> findAllEnAtencionTicketsByEmployee() {
+		Employee employee = iEmployeeService.findEmployeeByUser(authenticationService.getCurrentLoggedInUser());
+		return iTicketRepository.findByTicketStatusAndEmployee(TicketStatus.ATENDIENDO, employee).stream()
+				.map(ticketMapper::mapEntityToDto).collect(Collectors.toList());
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<TicketDto> findAllCerradoTicketsByEmployee() {
+		Employee employee = iEmployeeService.findEmployeeByUser(authenticationService.getCurrentLoggedInUser());
+		return iTicketRepository.findByTicketStatusAndEmployee(TicketStatus.CERRADO, employee).stream()
+				.map(ticketMapper::mapEntityToDto).collect(Collectors.toList());
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Ticket findTIcketById(Long id) {
+		return iTicketRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException("Ticket with id: " + id + " is not found!"));
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public void updateTicketStatusById(Long ticketId, String ticketStatus) {
+		Ticket ticket = findTIcketById(ticketId);
+		ticket.setTicketStatus(TicketStatus.valueOf(ticketStatus));
+		iTicketRepository.save(ticket);
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public void finishTicketById(Long id) {
+		Ticket ticket = findTIcketById(id);
+		ticket.setTicketStatus(TicketStatus.CERRADO);
+		ticket.setFinishedAt(Instant.now());
+		iTicketRepository.save(ticket);
+	}
+
 }
