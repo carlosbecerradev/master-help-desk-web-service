@@ -41,7 +41,7 @@ public class Ticket implements Serializable {
 	@Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP")
 	private Instant createdAt;
 
-	@Column(name = "finished_at", nullable = true, updatable = false, columnDefinition = "TIMESTAMP")
+	@Column(name = "finished_at", nullable = true, columnDefinition = "TIMESTAMP")
 	private Instant finishedAt;
 
 	@Enumerated(EnumType.STRING)
