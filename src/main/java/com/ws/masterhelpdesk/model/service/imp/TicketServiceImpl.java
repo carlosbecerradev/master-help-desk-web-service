@@ -84,18 +84,18 @@ public class TicketServiceImpl implements ITicketService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public void updateTicketStatusById(Long ticketId, String ticketStatus) {
-		Ticket ticket = findTIcketById(ticketId);
-		ticket.setTicketStatus(TicketStatus.valueOf(ticketStatus));
+	public void finishTicketById(Long id) {
+		Ticket ticket = findTIcketById(id);
+		ticket.setTicketStatus(TicketStatus.CERRADO);
+		ticket.setFinishedAt(Instant.now());
 		iTicketRepository.save(ticket);
 	}
 
 	@Override
 	@Transactional(readOnly = false)
-	public void finishTicketById(Long id) {
+	public void pickTicketById(Long id) {
 		Ticket ticket = findTIcketById(id);
-		ticket.setTicketStatus(TicketStatus.CERRADO);
-		ticket.setFinishedAt(Instant.now());
+		ticket.setTicketStatus(TicketStatus.ATENDIENDO);
 		iTicketRepository.save(ticket);
 	}
 

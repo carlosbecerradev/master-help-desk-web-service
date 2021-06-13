@@ -18,7 +18,7 @@ public interface ITicketService {
 
 	public Ticket findTIcketById(Long id);
 
-	public void updateTicketStatusById(Long ticketId, String ticketStatus);
-
 	public void finishTicketById(Long id);
+
+	public void pickTicketById(Long id);
 }

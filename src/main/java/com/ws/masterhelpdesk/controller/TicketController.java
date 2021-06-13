@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -68,14 +69,13 @@ public class TicketController {
 		return new ResponseEntity<List<TicketDto>>(iTicketService.findAllCerradoTicketsByEmployee(), HttpStatus.OK);
 	}
 
-	@PostMapping("/change/ticketStatus/{ticketId}")
-	public ResponseEntity<HttpStatus> updateTicketStatusById(@PathVariable("ticketId") @Positive Long ticketId,
-			@RequestBody String ticketStatus) {
-		iTicketService.updateTicketStatusById(ticketId, ticketStatus);
+	@PutMapping("/pick/{id}")
+	public ResponseEntity<HttpStatus> pickTicketById(@PathVariable(value = "id", required = true) @Positive Long id) {
+		iTicketService.pickTicketById(id);
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
 
-	@PostMapping("/finish/{id}")
+	@PutMapping("/finish/{id}")
 	public ResponseEntity<HttpStatus> finishTicketById(@PathVariable("id") @Positive Long id) {
 		iTicketService.finishTicketById(id);
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
