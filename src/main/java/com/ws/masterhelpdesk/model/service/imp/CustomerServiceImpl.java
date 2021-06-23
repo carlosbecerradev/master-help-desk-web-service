@@ -17,6 +17,7 @@ import com.ws.masterhelpdesk.model.entity.Gender;
 import com.ws.masterhelpdesk.model.entity.User;
 import com.ws.masterhelpdesk.model.repository.ICustomerRepository;
 import com.ws.masterhelpdesk.model.service.ICustomerService;
+import com.ws.masterhelpdesk.security.service.UserSecurityService;
 
 import lombok.AllArgsConstructor;
 
@@ -26,6 +27,7 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	private final ICustomerRepository iCustomerRepository;
 	private final CustomerMapper customerMapper;
+	private final UserSecurityService userSecurityService;
 
 	@Override
 	public Gender[] getEnumGenders() {
@@ -72,7 +74,8 @@ public class CustomerServiceImpl implements ICustomerService {
 		newCustomer.setEnabled(true);
 		newCustomer.setCreatedAt(Instant.now());
 
-		User newUser = new User(null, customerDto.getUsername(), customerDto.getPassword(), Authority.CLIENTE, true,
+		String bcryptPassword = userSecurityService.encodePassword(customerDto.getPassword());
+		User newUser = new User(null, customerDto.getUsername(), bcryptPassword, Authority.CLIENTE, true,
 				Instant.now());
 		newCustomer.setUser(newUser);
 		iCustomerRepository.save(newCustomer);

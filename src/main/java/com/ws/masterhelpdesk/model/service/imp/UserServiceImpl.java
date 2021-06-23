@@ -14,6 +14,7 @@ import com.ws.masterhelpdesk.model.entity.Authority;
 import com.ws.masterhelpdesk.model.entity.User;
 import com.ws.masterhelpdesk.model.repository.IUserRepository;
 import com.ws.masterhelpdesk.model.service.IUserService;
+import com.ws.masterhelpdesk.security.service.UserSecurityService;
 
 import lombok.AllArgsConstructor;
 
@@ -23,6 +24,7 @@ public class UserServiceImpl implements IUserService {
 
 	private final IUserRepository iUserRepository;
 	private final UserMapper userMapper;
+	private final UserSecurityService userSecurityService;
 
 	@Override
 	public Authority[] getEnumAuthorities() {
@@ -62,6 +64,7 @@ public class UserServiceImpl implements IUserService {
 	@Transactional(readOnly = false)
 	public void insertUser(UserDto userDto) {
 		User newUser = new User();
+		userDto.setPassword(userSecurityService.encodePassword(userDto.getPassword()));
 		newUser = userMapper.mapDtoToEntity(userDto, newUser);
 		newUser.setCreatedAt(Instant.now());
 		iUserRepository.save(newUser);
@@ -72,6 +75,7 @@ public class UserServiceImpl implements IUserService {
 	@Transactional(readOnly = false)
 	public void updateUser(UserDto userDto) {
 		User user = getUserById(userDto.getId());
+		userDto.setPassword(userSecurityService.encodePassword(userDto.getPassword()));
 		user = userMapper.mapDtoToEntity(userDto, user);
 		iUserRepository.save(user);
 		System.out.println("update: " + user.toString());

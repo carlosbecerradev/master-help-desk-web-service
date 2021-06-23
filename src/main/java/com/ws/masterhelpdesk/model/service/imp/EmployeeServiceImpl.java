@@ -15,6 +15,7 @@ import com.ws.masterhelpdesk.model.entity.Employee;
 import com.ws.masterhelpdesk.model.entity.User;
 import com.ws.masterhelpdesk.model.repository.IEmployeeRepository;
 import com.ws.masterhelpdesk.model.service.IEmployeeService;
+import com.ws.masterhelpdesk.security.service.UserSecurityService;
 
 import lombok.AllArgsConstructor;
 
@@ -24,6 +25,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
 	private final IEmployeeRepository iEmployeeRepository;
 	private final EmployeeMapper employeeMapper;
+	private final UserSecurityService userSecurityService;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -54,7 +56,10 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		newEmployee.setCreatedAt(Instant.now());
 		User user = new User();
 		user.setUsername(employeeInsert.getUsername());
-		user.setPassword(employeeInsert.getPassword());
+
+		String bcryptPassword = userSecurityService.encodePassword(employeeInsert.getPassword());
+		user.setPassword(bcryptPassword);
+
 		user.setAuthority(Authority.valueOf(employeeInsert.getAuthority().toUpperCase()));
 		user.setEnabled(true);
 		user.setCreatedAt(Instant.now());
