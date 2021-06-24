@@ -7,15 +7,19 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ws.masterhelpdesk.dto.NotificationEmail;
 import com.ws.masterhelpdesk.dto.TicketDto;
 import com.ws.masterhelpdesk.dto.insert.TicketInsert;
 import com.ws.masterhelpdesk.dto.mapper.TicketMapper;
+import com.ws.masterhelpdesk.mail.MailService;
+import com.ws.masterhelpdesk.model.entity.Assessment;
 import com.ws.masterhelpdesk.model.entity.CustomerRequest;
 import com.ws.masterhelpdesk.model.entity.Employee;
 import com.ws.masterhelpdesk.model.entity.Ticket;
 import com.ws.masterhelpdesk.model.entity.TicketPriority;
 import com.ws.masterhelpdesk.model.entity.TicketStatus;
 import com.ws.masterhelpdesk.model.repository.ITicketRepository;
+import com.ws.masterhelpdesk.model.service.IAssessmentService;
 import com.ws.masterhelpdesk.model.service.ICustomerRequestService;
 import com.ws.masterhelpdesk.model.service.IEmployeeService;
 import com.ws.masterhelpdesk.model.service.ITicketService;
@@ -32,6 +36,8 @@ public class TicketServiceImpl implements ITicketService {
 	private final ICustomerRequestService iCustomerRequestService;
 	private final TicketMapper ticketMapper;
 	private final AuthenticationService authenticationService;
+	private final IAssessmentService iAssessmentService;
+	private final MailService mailService;
 
 	@Override
 	@Transactional(readOnly = false)
@@ -88,7 +94,14 @@ public class TicketServiceImpl implements ITicketService {
 		Ticket ticket = findTIcketById(id);
 		ticket.setTicketStatus(TicketStatus.CERRADO);
 		ticket.setFinishedAt(Instant.now());
-		iTicketRepository.save(ticket);
+		
+		Ticket saveTicket = iTicketRepository.save(ticket);
+		Assessment assessmentCreated = iAssessmentService.insertByTicket(saveTicket);
+
+		mailService.sendMail(new NotificationEmail("Valoración de Atención a Optimal Solutions",
+				saveTicket.getCustomerRequest().getCustomer().getEmail(),
+				"Ingrese al siguiente Link para enviarnos su opinión respecto a la atención del servicio de mesa de ayuda que ha recibido recientemente: "
+						+ "http://localhost:5500/valorar-atencion/" + assessmentCreated.getToken()));
 	}
 
 	@Override
