@@ -94,14 +94,14 @@ public class TicketServiceImpl implements ITicketService {
 		Ticket ticket = findTIcketById(id);
 		ticket.setTicketStatus(TicketStatus.CERRADO);
 		ticket.setFinishedAt(Instant.now());
-		
+
 		Ticket saveTicket = iTicketRepository.save(ticket);
 		Assessment assessmentCreated = iAssessmentService.insertByTicket(saveTicket);
 
 		mailService.sendMail(new NotificationEmail("Valoración de Atención a Optimal Solutions",
 				saveTicket.getCustomerRequest().getCustomer().getEmail(),
-				"Ingrese al siguiente Link para enviarnos su opinión respecto a la atención del servicio de mesa de ayuda que ha recibido recientemente: "
-						+ "http://localhost:5500/valorar-atencion/" + assessmentCreated.getToken()));
+				"Ingrese al siguiente Link para enviarnos su opinión respecto a la atención del servicio de mesa de ayuda que ha recibido recientemente:",
+				assessmentCreated.getToken()));
 	}
 
 	@Override

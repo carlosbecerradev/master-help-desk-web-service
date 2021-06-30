@@ -11,9 +11,10 @@ import lombok.AllArgsConstructor;
 public class MailContentBuilder {
 	private final TemplateEngine templateEngine;
 
-	String build(String body) {
+	String build(String body, String token) {
 		Context context = new Context();
 		context.setVariable("message", body);
+		context.setVariable("token", token);
 		return templateEngine.process("assesstmentMailTemplate", context);
 	}
 }
