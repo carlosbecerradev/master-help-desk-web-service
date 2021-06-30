@@ -12,6 +12,6 @@ public interface IAssessmentService {
 
 	public Assessment insertByTicket(Ticket ticket);
 
-	public void update(AssessmentDto assessmentDto);
+	public boolean update(AssessmentDto assessmentDto);
 
 }

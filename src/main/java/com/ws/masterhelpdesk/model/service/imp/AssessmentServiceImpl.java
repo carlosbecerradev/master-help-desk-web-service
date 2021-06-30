@@ -56,12 +56,25 @@ public class AssessmentServiceImpl implements IAssessmentService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public void update(AssessmentDto assessmentDto) {
+	public boolean update(AssessmentDto assessmentDto) {
 		Assessment assessmentFound = findAssessmentByToken(assessmentDto.getToken());
-		assessmentFound.setAssessment_type(AssessmentType.valueOf(assessmentDto.getAssessmentType()));
-		assessmentFound.setObservation(assessmentDto.getObservation());
-		assessmentFound.setEnabled(false);
-		iAssessmentRepository.save(assessmentFound);
+		if (validateAssesstment(assessmentFound)) {
+			assessmentFound.setAssessment_type(AssessmentType.valueOf(assessmentDto.getAssessmentType()));
+			assessmentFound.setObservation(assessmentDto.getObservation());
+			assessmentFound.setEnabled(false);
+			iAssessmentRepository.save(assessmentFound);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private boolean validateAssesstment(Assessment assessment) {
+		boolean enabled = assessment.getEnabled();
+		Long createdAt = assessment.getCreatedAt().getEpochSecond();
+		Long now = Instant.now().getEpochSecond();
+		Long time24hToSeconds = 86400L;
+		return enabled == true && now - createdAt <= time24hToSeconds ? true : false;
 	}
 
 }

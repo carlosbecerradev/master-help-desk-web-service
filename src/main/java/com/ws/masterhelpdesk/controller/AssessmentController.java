@@ -36,8 +36,10 @@ public class AssessmentController {
 
 	@PutMapping("/free-update")
 	public ResponseEntity<HttpStatus> updateAssessment(@RequestBody AssessmentDto assessmentDto) {
-		iAssessmentService.update(assessmentDto);
-		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+		if (iAssessmentService.update(assessmentDto)) {
+			return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+		}
+		return new ResponseEntity<HttpStatus>(HttpStatus.NOT_ACCEPTABLE);
 	}
 
 	@GetMapping("/token/{token}")
