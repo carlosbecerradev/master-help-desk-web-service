@@ -32,4 +32,6 @@ public interface ITicketRepository extends JpaRepository<Ticket, Long> {
 	Integer countTicketsByTicketStatusAndEmployee(@Param("employee") Employee employee,
 			@Param("status") TicketStatus status);
 
+	@Query("select COUNT(t.ticketId) from Ticket t where t.ticketStatus = 'ATENDIENDO' AND t.createdAt BETWEEN :start AND :end")
+	Integer countByTicketStatusATENDIENDOAndDay(@Param("start") Instant start, @Param("end") Instant end);
 }
