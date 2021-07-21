@@ -122,7 +122,7 @@ public class DashboardAnalistaServiceImpl implements IDashboardAnalistaService {
 		return LineChartDto.builder().labels(labels).values(values).build();
 	}
 
-	private Instant getMondayOfWeek() {
+	public Instant getMondayOfWeek() {
 		Calendar c = Calendar.getInstance();
 		int currentDayOfWeekNumber = c.get(Calendar.DAY_OF_WEEK);
 		Instant currentDay = getCurrentDay();
@@ -132,7 +132,7 @@ public class DashboardAnalistaServiceImpl implements IDashboardAnalistaService {
 		return monday;
 	}
 
-	private Instant getCurrentDay() {
+	public Instant getCurrentDay() {
 		Instant gmtMinus5 = Instant.now().minus(Duration.ofHours(5));
 		return gmtMinus5.truncatedTo(ChronoUnit.DAYS);
 	}
